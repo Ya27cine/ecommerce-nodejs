@@ -1,0 +1,13 @@
+# docker-compose.yml
+# https://manglekuo.medium.com/running-mongodb-on-docker-with-macos-b08324f5aab2
+
+version: '3.1' #format version for this docker compose file
+services:
+  mongo-container:
+    image: mongo:latest
+    environment:
+        - MONGO_INITDB_ROOT_USERNAME=
+        - MONGO_INITDB_ROOT_PASSWORD=
+    ports:
+      - "27017:27017"
+    command: mongod
