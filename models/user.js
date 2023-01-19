@@ -40,6 +40,9 @@ const userSchema = new db.Schema({
 
 // Methods Virtual 
 userSchema.methods = {
+    isAuth: function(plainText){
+        return this.cryptPassword(plainText) === this.hashed_password;
+    },
     cryptPassword: function(password){
         if( ! password ) return '';
 
