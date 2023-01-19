@@ -31,9 +31,16 @@ module.exports.signin  = (req, res) => {
       user:{_id, name, email, role }
     })
   })
-
-
 }
+
+module.exports.signout  = (req, res) => {
+  res.clearCookie('token');
+  res.send({
+    message: "User singout !"
+  })
+}
+
+
 
 module.exports.index = (req, res) => {
     res.send({ message: "Users data ..." });
