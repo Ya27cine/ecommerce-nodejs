@@ -1,15 +1,16 @@
 const express = require('express');
 const userRoutes = require("./routes/users");
 const db = require("mongoose");
+const  bp = require("body-parser");
+
+
 const server = express();
 require("dotenv").config();
 
-// Routes Middleware :
-server.use("/api/users", userRoutes);
 
-// Server
-const port = process.env.PORT || 3000;
-server.listen( port, () => console.log("App is running on port ",port))
+// Middlewares
+server.use( bp.json() )
+
 
 // Connect DB
 db.set("strictQuery", false);
@@ -18,3 +19,14 @@ db.connect(process.env.dataBaseUrl,{
     })
     .then(() => console.log("DB connected !"))
     .catch((e) => console.log("not connect to database"))
+
+
+
+
+// Routes Middleware :
+server.use("/api/users", userRoutes);
+
+
+// Server
+const port = process.env.PORT || 3000;
+server.listen( port, () => console.log("App is running on port ",port))

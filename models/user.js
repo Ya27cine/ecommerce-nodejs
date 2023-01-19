@@ -8,13 +8,13 @@ const userSchema = new db.Schema({
         type: String,
         required: true,
         trim: true,
-        maxlength: 150
+        maxlength: 250
     },
     email: {
         type: String,
         required: true,
         trim: true,
-        maxlength: 150,
+        maxlength: 250,
         unique: true
     },
     hashed_password: {
@@ -38,19 +38,11 @@ const userSchema = new db.Schema({
     }
 }, {timestamps: true})
 
-// Fields Virtual 
-userSchema.virtual('password')
-    .set( function(password){
-        this._password = password;
-        this.salt = uuidv4();
-        this.hashed_password = this.cryptPassword();
-    })
-    .get(function(){return this._password})
-
 // Methods Virtual 
 userSchema.methods = {
     cryptPassword: function(password){
         if( ! password ) return '';
+
         try {
             return crypto
                     .createHmac('sha256', this.salt)
@@ -64,3 +56,14 @@ userSchema.methods = {
         // return this.cryptPassword( plainText ) === this.hashed_password
     }
 }
+
+// Fields Virtual 
+userSchema.virtual('password')
+    .set( function(password){
+        this._password = password;
+        this.salt = uuidv4();
+        this.hashed_password = this.cryptPassword(password);
+    })
+    .get(function(){return this._password})
+
+module.exports = db.model("User", userSchema);
