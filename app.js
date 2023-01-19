@@ -2,14 +2,14 @@ const express = require('express');
 const userRoutes = require("./routes/users");
 const db = require("mongoose");
 const  bp = require("body-parser");
-
-
+const validator    =   require('express-validator')
 const server = express();
 require("dotenv").config();
 
 
 // Middlewares
 server.use( bp.json() )
+server.use( validator() )
 
 
 // Connect DB
