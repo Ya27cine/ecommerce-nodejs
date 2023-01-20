@@ -1,9 +1,10 @@
-const express = require('express');
-const userRoutes = require("./routes/users");
-const db = require("mongoose");
-const  bp = require("body-parser");
-const validator    =   require('express-validator')
-const server = express();
+const express       = require('express');
+const authRoutes    = require("./routes/auth");
+const userRoutes    = require("./routes/users");
+const db            = require("mongoose");
+const  bp           = require("body-parser");
+const validator     = require('express-validator')
+const server        = express();
 require("dotenv").config();
 
 
@@ -24,7 +25,8 @@ db.connect(process.env.dataBaseUrl,{
 
 
 // Routes Middleware :
-server.use("/api/users", userRoutes);
+server.use("/api", authRoutes);
+server.use("/api", userRoutes);
 
 
 // Server
