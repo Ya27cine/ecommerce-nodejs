@@ -21,7 +21,7 @@ module.exports.signin  = (req, res) => {
     // It's Ok .
 
     // gene token
-    const _token = jwt.sign({_id: user._id}, process.env.JWT_SECRET);
+    const _token = jwt.sign({_id: user._id, role: user.role}, process.env.JWT_SECRET);
     // save token in cookie
     res.cookie('token',_token, {expire: new Date()+8765231})
 
