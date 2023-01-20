@@ -9,6 +9,9 @@ exports.requireSignIn = express_jwt({
 })
 
 exports.isAuth = ( req, res, next) => {
+
+    //  All Access for Admin ( 1 == admin && 0 == user)
+    if( req.auth.role == 1 ) return next();
     
     const user = req.profile && req.auth && ( req.profile._id == req.auth._id);
 
