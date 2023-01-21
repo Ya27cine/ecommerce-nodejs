@@ -23,7 +23,7 @@ const productSchema = db.Schema({
         type: Number
     },
     photo: {
-        type: Buffer,
+        data: Buffer,
         contentType: String
     },
     category: {
