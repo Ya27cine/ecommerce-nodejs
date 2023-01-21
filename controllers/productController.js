@@ -2,6 +2,7 @@ const Product     = require("../models/product");
 const formidable  = require("formidable");
 const fs          = require('fs');
 const Joi         = require("joi");
+const product = require("../models/product");
 
 exports.createProduct = (req, res) => {
 
@@ -45,4 +46,26 @@ exports.createProduct = (req, res) => {
             res.json({ product })
         })// end save
     });// end form
+}
+
+// Middleware :
+exports.productById = (req, res, next, id) => {
+   
+    Product.findById(id).exec((err, product) => {
+        if(err || ! product){
+            return res.status(400).json({
+                error: "Product Not Found !"
+            })
+        }
+
+        req.product = product;
+        next();
+    })
+}
+
+exports.showProduct = (req, res) => {
+    req.product.photo = undefined;
+    res.json({
+        product: req.product
+    })
 }
