@@ -1,6 +1,8 @@
 const express       = require('express');
 const authRoutes    = require("./routes/auth");
 const userRoutes    = require("./routes/users");
+const categoryRoutes= require("./routes/categories");
+
 const db            = require("mongoose");
 const  bp           = require("body-parser");
 const validator     = require('express-validator')
@@ -27,6 +29,8 @@ db.connect(process.env.dataBaseUrl,{
 // Routes Middleware :
 server.use("/api", authRoutes);
 server.use("/api", userRoutes);
+server.use("/api/category", categoryRoutes);
+
 
 
 // Server
