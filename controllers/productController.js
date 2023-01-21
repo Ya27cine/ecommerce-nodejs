@@ -11,8 +11,13 @@ exports.createProduct = (req, res) => {
         if (err)
             return res.status(400).json({error: "Image could not uploaded !"});
         const product = new Product( fields );
-        if(fields.photo){
-            product.photo.data         = fs.readFileSync( files.photo );
+        if(files.photo){
+            // check size photo :
+            if(files.photo.size > Math.pow(10, 6)){
+                return res.status(400).json({
+                    error: "Image Should be less than 1mb in size !"})
+            }
+            product.photo.data         = fs.readFileSync( files.photo.path );
             product.photo.contentType  = files.photo.type;
         }
         // save product in DB
