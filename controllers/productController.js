@@ -1,6 +1,7 @@
 const Product     = require("../models/product");
-const formidable  = require("formidable")
-const fs          = require('fs')
+const formidable  = require("formidable");
+const fs          = require('fs');
+const Joi         = require("joi");
 
 exports.createProduct = (req, res) => {
 
@@ -19,6 +20,20 @@ exports.createProduct = (req, res) => {
             }
             product.photo.data         = fs.readFileSync( files.photo.path );
             product.photo.contentType  = files.photo.type;
+        }
+        // Validation Object ?
+        const schemaValidatorProduct = Joi.object({
+                name: Joi.string().required(),
+                description: Joi.string().required(),
+                price: Joi.required(),
+                category: Joi.required(),
+                quantity: Joi.required(),
+        });
+        const { error } = schemaValidatorProduct.validate(fields);
+        if( error ){
+            return res.status(400).json({
+                error: error.details[0].message
+            })
         }
         // save product in DB
         product.save((err, product) => {
