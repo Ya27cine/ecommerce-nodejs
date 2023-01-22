@@ -16,8 +16,11 @@ module.exports.signin  = (req, res) => {
 
   const {email, password} = req.body;
   User.findOne({email},(err, user) => {
-    if( err || !user ) return res.status(400).json({error:"Email or password  not correct !!"})
-    if( !user.isAuth(password) )return res.status(401).json({error:"Email and password  not match !!"})
+    if( err || !user ) 
+      return res.status(400).json({error:"Email or password  not correct !!"})
+    if( !user.isAuth(password) )
+      return res.status(401).json({error:"Email and password  not match !!"})
+    
     // It's Ok .
 
     // gene token

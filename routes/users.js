@@ -8,7 +8,7 @@ const { requireSignIn, isAuth } = require("../middlewares/auth")
 const { isAdmin } = require("../middlewares/admin")
 
 
-router.get("/profile/:userId", requireSignIn, isAuth,isAdmin, getOneUser);
+router.get("/profile/:userId", requireSignIn, isAuth, isAdmin, getOneUser);
 router.param('userId', userById)
 
 
