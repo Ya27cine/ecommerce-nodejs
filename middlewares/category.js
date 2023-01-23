@@ -4,7 +4,7 @@ exports.categoryId = (req, res, next, id) => {
 
     Category.findById(id).exec( (err, category) => {
 
-        if(err){
+        if(err || ! category){
             return res.status(404).json({
                 error: "Category Not Found !!"
             })
