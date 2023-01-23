@@ -13,3 +13,11 @@ exports.createCategory = ( req, res) => {
         res.json({category})
     })
 }
+
+exports.showCategory = (req, res) => {
+    const category = req.category;
+
+    res.json({
+        category: category
+    })
+}
