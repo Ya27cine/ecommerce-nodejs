@@ -4,7 +4,7 @@ const userRoutes    = require("./routes/users");
 const categoryRoutes= require("./routes/categories");
 const productRoutes = require("./routes/products");
 const db            = require("mongoose");
-const  bp           = require("body-parser");
+const bp            = require("body-parser");
 const validator     = require('express-validator')
 const server        = express();
 require("dotenv").config();

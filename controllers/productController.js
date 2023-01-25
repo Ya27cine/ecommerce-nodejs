@@ -5,6 +5,29 @@ const Joi         = require("joi");
 const _           = require("lodash")
 
 
+exports.allProducts = (req, res) => {
+    let sortBy = req.query.sortBy ? req.query.sortBy: '_id';
+    let order  = req.query.order  ? req.query.order: 'asc';
+    let limit  = req.query.limit  ? parseInt(req.query.limit): 6;
+
+    Product.find()
+           .select("-photo")
+           .populate('category')
+           .sort([[sortBy, order]])
+           .limit(limit)
+           .exec( (err, products) => {
+                if(err){
+                    return res.status(404).json({
+                        error: "Products not Found !"
+                    })
+                }
+                res.json({
+                    products
+                })
+           })
+}
+
+
 exports.createProduct = (req, res) => {
 
     const form = new formidable.IncomingForm();
@@ -52,8 +75,6 @@ exports.createProduct = (req, res) => {
 }
 
 
-
-
 // Middleware :
 exports.productById = (req, res, next, id) => {
    
@@ -88,9 +109,6 @@ exports.deleteProduct = (req, res) => {
         res.status(204).json({})
     })
 }
-
-
-
 
 
 exports.updateProduct = (req, res) => {
@@ -139,4 +157,3 @@ exports.updateProduct = (req, res) => {
         })// end save
     });// end form
 }
-
