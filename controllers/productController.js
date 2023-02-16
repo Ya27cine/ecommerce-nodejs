@@ -26,7 +26,26 @@ exports.allProducts = (req, res) => {
                 })
            })
 }
+exports.relatedProduct = (req, res) => {
 
+    let limit  = req.query.limit  ? parseInt(req.query.limit): 3;
+
+    Product.find({category: req.product.category, 
+                  _id:      {$ne: req.product._id }})
+            .select('-photo')
+            .populate('category', '_id name')
+            .limit(limit)
+            .exec( (err, products) => {
+                if(err){
+                    return res.status(404).json({
+                        error: "Products not Found !"
+                    })
+                }
+                res.json({
+                    products
+                })
+            })
+}
 
 exports.createProduct = (req, res) => {
 
